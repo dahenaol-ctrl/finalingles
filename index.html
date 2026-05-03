@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dragon & Dragon World Tours — David Henao</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Serif+SC:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --crimson: #8B0000;
+    --gold: #C9A84C;
+    --gold-light: #F2D480;
+    --cream: #FAF3E0;
+    --ink: #1A0A00;
+    --red-bright: #CC2200;
+    --paper: #F5EDD6;
+    --shadow: rgba(139,0,0,0.18);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background-color: var(--cream);
+    color: var(--ink);
+    font-family: 'Crimson Pro', Georgia, serif;
+    font-size: 18px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--crimson);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 3rem;
+    height: 64px;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.4);
+  }
+  .nav-brand {
+    font-family: 'Noto Serif SC', serif;
+    color: var(--gold-light);
+    font-size: 1.3rem;
+    letter-spacing: 2px;
+  }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    color: var(--cream); text-decoration: none;
+    font-family: 'Crimson Pro', serif; font-size: 0.95rem;
+    letter-spacing: 1px; text-transform: uppercase;
+    opacity: 0.85; transition: opacity .2s, color .2s;
+  }
+  .nav-links a:hover { opacity: 1; color: var(--gold-light); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    background:
+      linear-gradient(160deg, rgba(139,0,0,0.85) 0%, rgba(20,5,0,0.92) 60%),
+      url('https://images.unsplash.com/photo-1508804185872-d7badad00f7d?w=1600') center/cover no-repeat;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; padding: 6rem 2rem 4rem;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: '龙';
+    position: absolute; font-family: 'Noto Serif SC', serif;
+    font-size: 40vw; color: rgba(201,168,76,0.04);
+    top: 50%; left: 50%; transform: translate(-50%,-50%);
+    pointer-events: none; user-select: none;
+  }
+  .hero-lanterns {
+    display: flex; gap: 3rem; margin-bottom: 2rem;
+  }
+  .lantern {
+    font-size: 3rem; animation: swing 3s ease-in-out infinite;
+  }
+  .lantern:nth-child(2) { animation-delay: 0.5s; }
+  .lantern:nth-child(3) { animation-delay: 1s; }
+  @keyframes swing {
+    0%,100% { transform: rotate(-5deg); }
+    50% { transform: rotate(5deg); }
+  }
+  .hero-tag {
+    font-family: 'Noto Serif SC', serif;
+    color: var(--gold); font-size: 0.85rem;
+    letter-spacing: 6px; text-transform: uppercase;
+    margin-bottom: 1.2rem; opacity: 0.9;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', Georgia, serif;
+    color: var(--cream);
+    font-size: clamp(3rem, 8vw, 7rem);
+    font-weight: 900; line-height: 1;
+    text-shadow: 0 4px 30px rgba(0,0,0,0.5);
+    margin-bottom: 0.5rem;
+  }
+  .hero h1 span { color: var(--gold-light); }
+  .hero-subtitle {
+    color: rgba(250,243,224,0.75);
+    font-size: 1.3rem; font-style: italic;
+    margin-bottom: 3rem; max-width: 500px;
+  }
+  .hero-cta {
+    display: inline-block;
+    background: var(--gold);
+    color: var(--ink);
+    padding: 0.9rem 2.5rem;
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem; font-weight: 700;
+    letter-spacing: 2px; text-decoration: none;
+    border-radius: 2px;
+    transition: background .25s, transform .2s;
+    box-shadow: 0 4px 20px rgba(201,168,76,0.3);
+  }
+  .hero-cta:hover { background: var(--gold-light); transform: translateY(-2px); }
+
+  /* ── SECTION WRAPPERS ── */
+  section { padding: 5rem 2rem; }
+  .container { max-width: 1100px; margin: 0 auto; }
+  .section-label {
+    font-family: 'Noto Serif SC', serif;
+    color: var(--crimson); font-size: 0.75rem;
+    letter-spacing: 5px; text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 900; line-height: 1.1;
+    margin-bottom: 1.5rem;
+  }
+  .divider {
+    width: 60px; height: 3px;
+    background: linear-gradient(90deg, var(--crimson), var(--gold));
+    margin-bottom: 2.5rem; border-radius: 2px;
+  }
+
+  /* ── ABOUT / INTRO ── */
+  .about-section { background: var(--paper); }
+  .about-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;
+  }
+  .about-text p { margin-bottom: 1.2rem; color: #2a1500; }
+  .about-badge {
+    display: inline-block;
+    background: var(--crimson); color: var(--gold-light);
+    padding: 0.3rem 1rem; font-size: 0.8rem;
+    letter-spacing: 3px; text-transform: uppercase;
+    font-family: 'Noto Serif SC', serif;
+    margin-bottom: 1rem;
+  }
+  .author-card {
+    background: var(--cream);
+    border-left: 4px solid var(--gold);
+    padding: 2rem 2rem 2rem 2.5rem;
+    border-radius: 2px;
+    box-shadow: 8px 8px 0 var(--shadow);
+  }
+  .author-card h3 {
+    font-family: 'Playfair Display', serif; font-size: 1.5rem;
+    margin-bottom: 0.3rem;
+  }
+  .author-card .role { color: var(--crimson); font-size: 0.9rem; font-style: italic; }
+
+  /* ── CHINA DESTINATIONS ── */
+  .destinations-section { background: var(--cream); }
+  .dest-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
+    margin-top: 2rem;
+  }
+  .dest-card {
+    background: var(--paper);
+    border-top: 3px solid var(--crimson);
+    padding: 1.8rem 1.5rem;
+    border-radius: 2px;
+    box-shadow: 4px 4px 0 var(--shadow);
+    transition: transform .25s, box-shadow .25s;
+    position: relative; overflow: hidden;
+  }
+  .dest-card::after {
+    content: attr(data-char);
+    font-family: 'Noto Serif SC', serif;
+    position: absolute; bottom: -10px; right: -5px;
+    font-size: 5rem; color: rgba(139,0,0,0.05);
+    pointer-events: none;
+  }
+  .dest-card:hover { transform: translateY(-4px); box-shadow: 6px 10px 0 var(--shadow); }
+  .dest-icon { font-size: 2rem; margin-bottom: 0.8rem; }
+  .dest-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15rem; margin-bottom: 0.7rem; color: var(--crimson);
+  }
+  .dest-card p { font-size: 0.95rem; color: #3a1a00; line-height: 1.6; }
+
+  /* ── BLOG SECTION ── */
+  .blog-section { background: var(--ink); color: var(--cream); }
+  .blog-section .section-label { color: var(--gold); }
+  .blog-section .section-title { color: var(--cream); }
+  .blog-section .divider { background: linear-gradient(90deg, var(--gold), var(--red-bright)); }
+  .blog-intro { color: rgba(250,243,224,0.75); font-style: italic; margin-bottom: 3rem; max-width: 700px; }
+  .blog-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+  .blog-post {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(201,168,76,0.2);
+    padding: 2rem;
+    border-radius: 2px;
+    transition: background .25s, border-color .25s;
+  }
+  .blog-post:hover { background: rgba(201,168,76,0.07); border-color: rgba(201,168,76,0.4); }
+  .blog-post-label {
+    color: var(--gold); font-size: 0.75rem; letter-spacing: 3px;
+    text-transform: uppercase; margin-bottom: 0.5rem;
+    font-family: 'Noto Serif SC', serif;
+  }
+  .blog-post h3 {
+    font-family: 'Playfair Display', serif; font-size: 1.4rem;
+    color: var(--cream); margin-bottom: 1rem;
+  }
+  .blog-post p { font-size: 0.95rem; color: rgba(250,243,224,0.75); line-height: 1.65; margin-bottom: 1rem; }
+  .blog-post .conditional {
+    background: rgba(139,0,0,0.3); border-left: 3px solid var(--crimson);
+    padding: 0.6rem 1rem; margin: 0.6rem 0; font-style: italic;
+    font-size: 0.92rem; color: rgba(250,243,224,0.9);
+    border-radius: 0 2px 2px 0;
+  }
+
+  /* ── TOURS SECTION ── */
+  .tours-section { background: var(--paper); }
+  .tours-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; margin-top: 2rem; }
+  .tour-card {
+    background: var(--cream);
+    border: 1px solid rgba(139,0,0,0.15);
+    border-radius: 2px; overflow: hidden;
+    box-shadow: 5px 5px 0 rgba(139,0,0,0.1);
+    transition: transform .25s, box-shadow .25s;
+  }
+  .tour-card:hover { transform: translateY(-4px); box-shadow: 7px 12px 0 rgba(139,0,0,0.15); }
+  .tour-header {
+    background: var(--crimson); color: var(--cream);
+    padding: 1.5rem 1.8rem;
+  }
+  .tour-header .days {
+    font-family: 'Noto Serif SC', serif;
+    color: var(--gold-light); font-size: 0.75rem;
+    letter-spacing: 3px; margin-bottom: 0.3rem;
+  }
+  .tour-header h3 { font-family: 'Playfair Display', serif; font-size: 1.3rem; }
+  .tour-body { padding: 1.8rem; }
+  .tour-day { margin-bottom: 1.2rem; }
+  .tour-day strong { color: var(--crimson); font-family: 'Playfair Display', serif; }
+  .tour-day p { font-size: 0.92rem; color: #2a1200; }
+  .includes-list { list-style: none; display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; }
+  .includes-list li {
+    background: var(--crimson); color: var(--cream);
+    padding: 0.2rem 0.7rem; font-size: 0.78rem;
+    border-radius: 20px; font-family: 'Crimson Pro', serif;
+  }
+
+  /* ── COUNTRIES INFO ── */
+  .countries-section { background: var(--cream); }
+  .countries-tabs { display: flex; gap: 0; margin-bottom: 0; border-bottom: 2px solid var(--crimson); }
+  .tab-btn {
+    padding: 0.7rem 1.8rem; background: none; border: none;
+    font-family: 'Playfair Display', serif; font-size: 1rem;
+    cursor: pointer; color: #5a3010; border-bottom: 3px solid transparent;
+    margin-bottom: -2px; transition: color .2s, border-color .2s;
+  }
+  .tab-btn.active { color: var(--crimson); border-bottom-color: var(--crimson); font-weight: 700; }
+  .tab-content { display: none; padding: 2rem 0; }
+  .tab-content.active { display: block; }
+  .country-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.2rem; }
+  .info-card {
+    background: var(--paper); border-top: 3px solid var(--gold);
+    padding: 1.3rem; border-radius: 2px;
+  }
+  .info-card h4 {
+    font-family: 'Noto Serif SC', serif; color: var(--crimson);
+    font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+  .info-card p { font-size: 0.9rem; color: #2a1200; }
+  .airline-list { list-style: none; }
+  .airline-list li { padding: 0.25rem 0; font-size: 0.9rem; border-bottom: 1px solid rgba(139,0,0,0.08); }
+  .airline-list li:last-child { border-bottom: none; }
+
+  /* ── TYPE 3 CONDITIONAL ── */
+  .conditional-section { background: var(--crimson); color: var(--cream); }
+  .conditional-section .section-label { color: var(--gold-light); }
+  .conditional-section .section-title { color: var(--cream); }
+  .conditional-section .divider { background: linear-gradient(90deg, var(--gold-light), #fff); }
+  .cond-intro { color: rgba(250,243,224,0.8); font-style: italic; margin-bottom: 2.5rem; }
+  .cond-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
+  .cond-card {
+    background: rgba(0,0,0,0.2); border-left: 3px solid var(--gold-light);
+    padding: 1.2rem 1.5rem; border-radius: 0 2px 2px 0;
+    font-style: italic; font-size: 1rem;
+    color: rgba(250,243,224,0.92);
+    transition: background .2s;
+  }
+  .cond-card:hover { background: rgba(0,0,0,0.3); }
+  .cond-card .num {
+    font-family: 'Playfair Display', serif; font-size: 1.5rem; font-style: normal;
+    color: var(--gold-light); display: block; margin-bottom: 0.3rem;
+  }
+
+  /* ── CHAT / QUESTIONS ── */
+  .chat-section { background: var(--ink); color: var(--cream); }
+  .chat-section .section-label { color: var(--gold); }
+  .chat-section .section-title { color: var(--cream); }
+  .chat-section .divider { background: linear-gradient(90deg, var(--gold), var(--red-bright)); }
+  .chat-intro { color: rgba(250,243,224,0.7); font-style: italic; margin-bottom: 2.5rem; }
+  .chat-window {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 4px; padding: 1.5rem; max-width: 750px;
+  }
+  .chat-header {
+    display: flex; align-items: center; gap: 0.8rem;
+    border-bottom: 1px solid rgba(201,168,76,0.2); padding-bottom: 1rem; margin-bottom: 1.5rem;
+  }
+  .chat-avatar { font-size: 1.5rem; }
+  .chat-header span { font-family: 'Noto Serif SC', serif; color: var(--gold); font-size: 0.85rem; }
+  .msg { margin-bottom: 1.2rem; }
+  .msg.question .bubble {
+    background: rgba(139,0,0,0.3); border: 1px solid rgba(139,0,0,0.4);
+    border-radius: 4px 4px 4px 0; padding: 0.8rem 1.2rem;
+    display: inline-block; max-width: 80%;
+    font-size: 0.95rem; color: var(--cream);
+  }
+  .msg.answer .bubble-wrap { text-align: right; }
+  .msg.answer .bubble {
+    background: rgba(201,168,76,0.15); border: 1px solid rgba(201,168,76,0.3);
+    border-radius: 4px 4px 0 4px; padding: 0.8rem 1.2rem;
+    display: inline-block; max-width: 85%;
+    font-size: 0.95rem; color: rgba(250,243,224,0.9);
+  }
+  .msg-label { font-size: 0.75rem; color: rgba(250,243,224,0.4); margin-bottom: 0.3rem; }
+  .msg.answer .msg-label { text-align: right; }
+
+  /* ── VIDEO ── */
+  .video-section { background: var(--paper); }
+  .video-card {
+    background: var(--cream); border: 1px solid rgba(139,0,0,0.15);
+    border-radius: 2px; padding: 2rem;
+    box-shadow: 5px 5px 0 rgba(139,0,0,0.1); max-width: 700px;
+  }
+  .video-wrapper {
+    position: relative; width: 100%; padding-bottom: 56.25%;
+    border-radius: 4px; overflow: hidden;
+    margin-bottom: 1.2rem;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.25);
+  }
+  .video-wrapper iframe {
+    position: absolute; top: 0; left: 0;
+    width: 100%; height: 100%; border: none;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--ink); color: rgba(250,243,224,0.5);
+    text-align: center; padding: 3rem 2rem;
+    border-top: 1px solid rgba(201,168,76,0.15);
+  }
+  footer .footer-brand {
+    font-family: 'Noto Serif SC', serif; color: var(--gold);
+    font-size: 1.2rem; margin-bottom: 0.5rem; letter-spacing: 3px;
+  }
+  footer p { font-size: 0.85rem; }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+  .fade-up { animation: fadeUp 0.7s ease forwards; }
+  .delay-1 { animation-delay: 0.15s; opacity: 0; }
+  .delay-2 { animation-delay: 0.3s; opacity: 0; }
+  .delay-3 { animation-delay: 0.45s; opacity: 0; }
+
+  @media (max-width: 768px) {
+    .about-grid, .blog-grid, .tours-grid, .cond-grid { grid-template-columns: 1fr; }
+    .dest-grid { grid-template-columns: 1fr 1fr; }
+    .country-grid { grid-template-columns: 1fr 1fr; }
+    nav { padding: 0 1rem; }
+    .nav-links { gap: 1rem; }
+    .nav-links a { font-size: 0.8rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand">🐉 Dragon & Dragon Tours</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#destinations">China</a></li>
+    <li><a href="#blog">Blog</a></li>
+    <li><a href="#tours">Tours</a></li>
+    <li><a href="#info">Info</a></li>
+    <li><a href="#conditional3">Reflections</a></li>
+    <li><a href="#chat">Q&amp;A</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-lanterns">
+    <span class="lantern">🏮</span>
+    <span class="lantern">🏮</span>
+    <span class="lantern">🏮</span>
+  </div>
+  <p class="hero-tag fade-up">World Tours · English Module Project</p>
+  <h1 class="fade-up delay-1">Dragon &amp; <span>Dragon</span><br>World Tours</h1>
+  <p class="hero-subtitle fade-up delay-2">Where ancient civilizations meet the modern traveler's dream — starting in the heart of China.</p>
+  <a href="#destinations" class="hero-cta fade-up delay-3">Explore China ↓</a>
+</div>
+
+<!-- ABOUT -->
+<section class="about-section" id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-text">
+        <span class="about-badge">Our Story</span>
+        <div class="section-label">About Dragon &amp; Dragon Tours</div>
+        <h2 class="section-title">Travel the World,<br>Begin in China</h2>
+        <div class="divider"></div>
+        <p>Dragon &amp; Dragon World Tours is a travel company specializing in immersive cultural experiences across Asia and beyond. From the ancient walls of Beijing to the neon skylines of Hong Kong, we design journeys that connect you with history, cuisine, and the soul of each destination.</p>
+        <p>This portal documents the complete study project for the English Module at San Mateo Unidad Virtual — integrating three lessons on First, Second, and Third Conditionals through authentic travel content about China.</p>
+      </div>
+      <div class="author-card">
+        <h3>David Andrés Henao López</h3>
+        <p class="role">Student · English Module · San Mateo Educación Superior</p>
+        <br>
+        <p>This project showcases the development of three activities across the module, all centered on the theme of tourism in China — combining grammar structures with real cultural knowledge and creative writing.</p>
+        <br>
+        <p><strong>Units covered:</strong> First Conditional (Unit 1 — Folleto/Video), Second Conditional (Unit 2 — Blog), Third Conditional (Unit 3 — Web Page).</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DESTINATIONS -->
+<section class="destinations-section" id="destinations">
+  <div class="container">
+    <div class="section-label">Lesson 1 — First Conditional</div>
+    <h2 class="section-title">Tourist Attractions in Beijing</h2>
+    <div class="divider"></div>
+    <p style="margin-bottom:0.5rem; max-width:700px; color:#2a1200;">Based on the brochure <em>"Trip to China"</em> — all descriptions use the First Conditional structure: <strong>If + present simple, will + verb</strong>.</p>
+
+    <div class="dest-grid">
+      <div class="dest-card" data-char="园">
+        <div class="dest-icon">🌊</div>
+        <h3>Beihai Park &amp; Imperial Gardens</h3>
+        <p><em>"If you walk through Beihai Park, you will discover one of the finest examples of Chinese gardening art. If you take a boat ride on the lake, you will get a breathtaking view of the White Pagoda."</em></p>
+      </div>
+      <div class="dest-card" data-char="门">
+        <div class="dest-icon">🏛️</div>
+        <h3>Tiananmen Square</h3>
+        <p><em>"If you stand in Tiananmen Square, you will feel the weight of Chinese history all around you. If you go early in the morning, you will witness the impressive flag-raising ceremony."</em></p>
+      </div>
+      <div class="dest-card" data-char="宫">
+        <div class="dest-icon">🏯</div>
+        <h3>The Summer Palace</h3>
+        <p><em>"If you spend a day at the Summer Palace, you will experience the beauty of a UNESCO World Heritage Site. If you climb Longevity Hill, you will see a panoramic view of Kunming Lake."</em></p>
+      </div>
+      <div class="dest-card" data-char="城">
+        <div class="dest-icon">🔴</div>
+        <h3>The Forbidden City</h3>
+        <p><em>"If you visit the Forbidden City, you will be amazed by its 9,000 rooms and imperial history. If you arrive early, you will avoid the crowds and enjoy the architecture in peace."</em></p>
+      </div>
+      <div class="dest-card" data-char="天">
+        <div class="dest-icon">🛕</div>
+        <h3>Temple of Heaven (Tiantan)</h3>
+        <p><em>"If you visit the Temple of Heaven, you will understand why emperors came here to pray for good harvests. If you explore the surrounding park, you will find locals doing tai chi."</em></p>
+      </div>
+      <div class="dest-card" data-char="陵">
+        <div class="dest-icon">⛰️</div>
+        <h3>The Thirteen Ming Tombs</h3>
+        <p><em>"If you travel to the outskirts of Beijing, you will encounter the magnificent burial sites of thirteen Ming emperors."</em></p>
+      </div>
+      <div class="dest-card" data-char="熊">
+        <div class="dest-icon">🐼</div>
+        <h3>Beijing Zoo</h3>
+        <p><em>"If you take your family to the Beijing Zoo, you will meet the famous Chinese giant panda in person."</em></p>
+      </div>
+
+      <!-- Five Places from Unit 2 -->
+      <div class="dest-card" data-char="长">
+        <div class="dest-icon">🧱</div>
+        <h3>The Great Wall of China</h3>
+        <p>One of the New Seven Wonders of the World. Its winding path over rugged mountains totals around 5,000 km. In the eyes of most travelers — <em>you haven't been to China if you haven't climbed the Great Wall.</em></p>
+      </div>
+      <div class="dest-card" data-char="兵">
+        <div class="dest-icon">⚔️</div>
+        <h3>The Terracotta Army — Xi'an</h3>
+        <p>Discovered in 1974, this UNESCO World Cultural Heritage Site features hundreds of life-size clay soldiers representing the army that unified China during the Warring States Period.</p>
+      </div>
+      <div class="dest-card" data-char="外">
+        <div class="dest-icon">🌆</div>
+        <h3>The Bund — Shanghai</h3>
+        <p>One of Shanghai's most recognizable architectural symbols, showcasing colonial European buildings alongside modern skyscrapers along the Huangpu River.</p>
+      </div>
+      <div class="dest-card" data-char="港">
+        <div class="dest-icon">🌃</div>
+        <h3>Victoria Harbor — Hong Kong</h3>
+        <p>Victoria Peak offers the iconic bird's-eye view of Hong Kong. At night, the Symphony of Lights from various buildings creates a spectacular show across the harbor.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BLOG -->
+<section class="blog-section" id="blog">
+  <div class="container">
+    <div class="section-label">Lesson 2 — Second Conditional</div>
+    <h2 class="section-title">David's Travel Blog</h2>
+    <div class="divider"></div>
+    <p class="blog-intro">Using the Second Conditional structure — <strong>If + past simple, would + verb</strong> — to imagine hypothetical travel scenarios across Chinese cities.</p>
+
+    <div class="blog-grid">
+
+      <div class="blog-post">
+        <div class="blog-post-label">📍 Beijing</div>
+        <h3>Dreaming of the Capital</h3>
+        <p>Beijing holds centuries of imperial history within its walls. As I read about its majestic monuments, I can't help but imagine myself walking through them.</p>
+        <div class="conditional">If I visited Beijing, I would spend three days exploring the Forbidden City and feeling the weight of 24 dynasties beneath my feet.</div>
+        <div class="conditional">If I walked along the Great Wall at sunrise, I would feel like I was standing at the edge of history itself.</div>
+        <div class="conditional">If I had a local guide, I would discover hidden hutongs and taste authentic Peking duck in a family restaurant.</div>
+      </div>
+
+      <div class="blog-post">
+        <div class="blog-post-label">📍 Xi'an</div>
+        <h3>Meeting the Ancient Warriors</h3>
+        <p>The Terracotta Army is one of the most extraordinary archaeological discoveries of the 20th century. Imagining a visit there fills me with wonder.</p>
+        <div class="conditional">If I stood before the Terracotta Army in Xi'an, I would be speechless at the sight of thousands of unique soldier faces.</div>
+        <div class="conditional">If I traveled to Xi'an, I would also explore the ancient city walls by bicycle at dusk.</div>
+        <div class="conditional">If I had the chance to study ancient Chinese history on-site, I would understand the Qin Dynasty in a completely different way.</div>
+      </div>
+
+      <div class="blog-post">
+        <div class="blog-post-label">📍 Shanghai</div>
+        <h3>The City That Never Sleeps</h3>
+        <p>Shanghai is a city of contrasts — old and new, East and West. The Bund represents this duality perfectly, with colonial architecture facing ultramodern towers.</p>
+        <div class="conditional">If I visited The Bund in Shanghai, I would photograph the skyline from every angle and watch the city transform from golden afternoon to electric night.</div>
+        <div class="conditional">If I explored Shanghai's French Concession, I would find cozy cafés, tree-lined streets, and a fascinating blend of cultures.</div>
+      </div>
+
+      <div class="blog-post">
+        <div class="blog-post-label">📍 Hong Kong</div>
+        <h3>The Pearl of the Orient</h3>
+        <p>Hong Kong is a world of its own — a place where towering skyscrapers meet traditional fishing villages, and dim sum is served at midnight.</p>
+        <div class="conditional">If I climbed Victoria Peak in Hong Kong, I would see one of the most spectacular harbor views in the entire world.</div>
+        <div class="conditional">If I took the Star Ferry across Victoria Harbour at night, I would watch the Symphony of Lights dance across the skyscrapers and feel the magic of Hong Kong.</div>
+      </div>
+
+    </div>
+
+    <!-- Answer to Unit 2 questions -->
+    <div style="margin-top:3rem; background:rgba(201,168,76,0.08); border:1px solid rgba(201,168,76,0.2); border-radius:2px; padding:2rem;">
+      <p class="blog-post-label" style="color:var(--gold);">💬 Blog Comments — Answering the Unit 2 Questions</p>
+      <br>
+      <p style="color:rgba(250,243,224,0.85);"><strong style="color:var(--gold-light);">Q: From the 5 places mentioned, which ones would you like to visit the most? Why?</strong></p>
+      <p style="color:rgba(250,243,224,0.75); margin-top:0.5rem; font-style:italic;">If I had the opportunity to visit any of the five places, I would choose the Great Wall of China without hesitation. If I walked along its ancient stones and looked out over the mountains, I would feel deeply connected to one of humanity's greatest architectural achievements. Additionally, if I visited the Terracotta Army in Xi'an, I would experience a once-in-a-lifetime encounter with thousands of warriors sculpted over 2,000 years ago.</p>
+      <br>
+      <p style="color:rgba(250,243,224,0.85);"><strong style="color:var(--gold-light);">Q: What would you like to do as a tourist if you had the possibility to visit China?</strong></p>
+      <p style="color:rgba(250,243,224,0.75); margin-top:0.5rem; font-style:italic;">If I had the possibility to visit China, I would divide my time between history, food, and nature. I would visit the Forbidden City, climb the Great Wall, taste regional cuisines in Xi'an and Chengdu, and end my trip watching the lights of Hong Kong's harbor from Victoria Peak.</p>
+    </div>
+  </div>
+</section>
+
+<!-- VIDEO SECTION -->
+<section class="video-section" id="video">
+  <div class="container">
+    <div class="section-label">Lesson 1 — Multimedia</div>
+    <h2 class="section-title">Video Presentation</h2>
+    <div class="divider"></div>
+    <p style="margin-bottom:2rem; color:#2a1200;">The following video presentation covers the tourist attractions in Beijing, developed as part of the Unit 1 individual moment activity.</p>
+    <div class="video-card">
+      <div class="video-wrapper">
+        <iframe
+          src="https://www.youtube.com/embed/79QbSrIJcTk"
+          title="Tourist Attractions in Beijing — David Henao"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen>
+        </iframe>
+      </div>
+      <p style="font-size:0.92rem; color:#3a1a00;"><strong>File:</strong> David_Andres-Henao_Lopez-momentoindividual-video_.mp4 &nbsp;|&nbsp; <strong>Topic:</strong> Trip to China — First Conditional structures applied to Beijing tourist destinations.</p>
+    </div>
+  </div>
+</section>
+
+<!-- TOURS SECTION -->
+<section class="tours-section" id="tours">
+  <div class="container">
+    <div class="section-label">Lesson 3 — Tour Packages</div>
+    <h2 class="section-title">Beijing Tour Plans</h2>
+    <div class="divider"></div>
+    <p style="margin-bottom:1rem; color:#2a1200; max-width:700px;">Based on the study resource <em>"Beijing Tours"</em> (San Mateo Unidad Virtual). Choose the tour that best fits your adventure style.</p>
+
+    <div class="tours-grid">
+      <div class="tour-card">
+        <div class="tour-header">
+          <div class="days">2 DAYS</div>
+          <h3>Beijing Highlights Bus Group Tour</h3>
+        </div>
+        <div class="tour-body">
+          <div class="tour-day">
+            <strong>Day 1 — Great Wall &amp; Ming Tombs</strong>
+            <p>Hotel pickup 7:00–8:30am · Changling Tomb · Jade Carving Factory · Badaling Great Wall (2 hrs hiking) · Bird's Nest Olympic Stadium · Chinese Silk Arts.</p>
+          </div>
+          <div class="tour-day">
+            <strong>Day 2 — Forbidden City, Temple of Heaven &amp; Summer Palace</strong>
+            <p>Tiananmen Square · Forbidden City (2 hr walk, S–N axis) · Chinese Medicine culture · Temple of Heaven · Pearl free market · Summer Palace (1.5 hrs).</p>
+          </div>
+          <ul class="includes-list">
+            <li>✓ Entrance Tickets</li>
+            <li>✓ English Guide</li>
+            <li>✓ A/C Coach Bus</li>
+            <li>✓ Hotel Pickup/Drop-off</li>
+            <li>✓ Chinese Lunch</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="tour-card">
+        <div class="tour-header">
+          <div class="days">1 EVENING</div>
+          <h3>China Kung Fu Show Night Tour</h3>
+        </div>
+        <div class="tour-body">
+          <div class="tour-day">
+            <strong>Evening Itinerary</strong>
+            <p>Hotel pickup 6:00pm · Drive 30 min to Beijing Red Theatre · Show: "The Legend of Kung Fu" at 19:30 — a must-see martial arts production by China Heaven Creation International Performing Arts. Return to hotel ~9:20pm.</p>
+          </div>
+          <div class="tour-day">
+            <strong>Why I'd Choose This Tour</strong>
+            <p>If I had visited Beijing on a short trip, I would have chosen the Kung Fu Show to experience China's martial arts tradition in a world-class performance setting — a perfect evening activity.</p>
+          </div>
+          <ul class="includes-list">
+            <li>✓ Show Ticket</li>
+            <li>✓ English Guide</li>
+            <li>✓ A/C Coach Bus</li>
+            <li>✓ Hotel Pickup/Drop-off</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COUNTRIES INFO -->
+<section class="countries-section" id="info">
+  <div class="container">
+    <div class="section-label">Travel Information</div>
+    <h2 class="section-title">Essential Guide</h2>
+    <div class="divider"></div>
+
+    <div class="countries-tabs">
+      <button class="tab-btn active" onclick="switchTab('china')">🇨🇳 China</button>
+      <button class="tab-btn" onclick="switchTab('japan')">🇯🇵 Japan</button>
+      <button class="tab-btn" onclick="switchTab('thailand')">🇹🇭 Thailand</button>
+    </div>
+
+    <div id="china" class="tab-content active">
+      <div class="country-grid">
+        <div class="info-card">
+          <h4>✈️ Airlines</h4>
+          <ul class="airline-list">
+            <li>Air China (CA)</li>
+            <li>China Eastern (MU)</li>
+            <li>Avianca Colombia</li>
+            <li>Cathay Pacific</li>
+            <li>Korean Air (via Seoul)</li>
+          </ul>
+        </div>
+        <div class="info-card">
+          <h4>📅 Best Dates to Visit</h4>
+          <p><strong>Spring:</strong> Mar–May (mild, cherry blossoms)</p>
+          <p><strong>Autumn:</strong> Sep–Nov (clear skies, cooler)</p>
+          <p><strong>Avoid:</strong> Golden Week (Oct 1–7) — very crowded</p>
+          <p><strong>Festival:</strong> Chinese New Year (Jan/Feb)</p>
+        </div>
+        <div class="info-card">
+          <h4>🍜 Chinese Cuisine</h4>
+          <ul class="airline-list">
+            <li>Peking Duck (北京烤鸭)</li>
+            <li>Dim Sum (点心)</li>
+            <li>Hot Pot (火锅)</li>
+            <li>Dumplings (饺子)</li>
+            <li>Kung Pao Chicken</li>
+            <li>Mapo Tofu</li>
+          </ul>
+        </div>
+        <div class="info-card">
+          <h4>🎎 Customs &amp; Etiquette</h4>
+          <ul class="airline-list">
+            <li>Greet with a slight bow or handshake</li>
+            <li>Accept business cards with two hands</li>
+            <li>Remove shoes indoors (many homes)</li>
+            <li>Avoid tipping — it can be seen as rude</li>
+            <li>Red is a lucky color</li>
+            <li>4 is considered unlucky (sounds like "death")</li>
+          </ul>
+        </div>
+        <div class="info-card">
+          <h4>💱 Currency &amp; Budget</h4>
+          <p><strong>Currency:</strong> Chinese Yuan (CNY / ¥)</p>
+          <p><strong>Approx.:</strong> 1 USD ≈ 7.2 CNY</p>
+          <p><strong>Budget stay:</strong> ~¥200–400/night</p>
+          <p><strong>Mid-range:</strong> ¥500–1,200/night</p>
+        </div>
+        <div class="info-card">
+          <h4>🛡️ Visas &amp; Entry</h4>
+          <p>Colombian citizens require a tourist visa (L-Visa). Apply at the Chinese Embassy in Bogotá. Processing takes 4–7 business days. Validity: 30 or 90 days.</p>
+        </div>
+        <div class="info-card">
+          <h4>🌐 Connectivity</h4>
+          <p>China's "Great Firewall" blocks Google, WhatsApp, Instagram, and YouTube. Download a VPN before entering. WeChat and Alipay are the main payment and communication apps.</p>
+        </div>
+        <div class="info-card">
+          <h4>🚇 Transportation</h4>
+          <p>Beijing Metro: extensive and affordable (¥3–8/trip). High-speed trains connect cities (Shanghai in 5.5 hrs). Didi (Chinese Uber) is widely available.</p>
+        </div>
+      </div>
+    </div>
+
+    <div id="japan" class="tab-content">
+      <div class="country-grid">
+        <div class="info-card">
+          <h4>✈️ Airlines</h4>
+          <ul class="airline-list">
+            <li>Japan Airlines (JL)</li>
+            <li>ANA (All Nippon Airways)</li>
+            <li>Avianca (via connection)</li>
+            <li>Korean Air (via Seoul)</li>
+          </ul>
+        </div>
+        <div class="info-card">
+          <h4>📅 Best Dates</h4>
+          <p><strong>Spring:</strong> Late Mar–Apr (Cherry blossoms / Sakura)</p>
+          <p><strong>Autumn:</strong> Oct–Nov (foliage season)</p>
+          <p><strong>Winter:</strong> Dec–Feb for ski resorts and illuminations</p>
+        </div>
+        <div class="info-card">
+          <h4>🍱 Japanese Cuisine</h4>
+          <ul class="airline-list">
+            <li>Sushi &amp; Sashimi</li>
+            <li>Ramen (various regional styles)</li>
+            <li>Tempura</li>
+            <li>Okonomiyaki</li>
+            <li>Wagyu Beef</li>
+            <li>Matcha desserts</li>
+          </ul>
+        </div>
+        <div class="info-card">
+          <h4>🎎 Customs</h4>
+          <ul class="airline-list">
+            <li>Bow instead of handshake</li>
+            <li>No tipping — it is considered rude</li>
+            <li>Remove shoes before entering homes/temples</li>
+            <li>Silence on public transport</li>
+            <li>Carry cash — many places don't accept cards</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div id="thailand" class="tab-content">
+      <div class="country-grid">
+        <div class="info-card">
+          <h4>✈️ Airlines</h4>
+          <ul class="airline-list">
+            <li>Thai Airways (TG)</li>
+            <li>Bangkok Airways</li>
+            <li>Qatar Airways (via Doha)</li>
+            <li>Emirates (via Dubai)</li>
+          </ul>
+        </div>
+        <div class="info-card">
+          <h4>📅 Best Dates</h4>
+          <p><strong>Nov–Feb:</strong> Cool and dry season (best for tourism)</p>
+          <p><strong>Apr:</strong> Songkran (Thai New Year water festival)</p>
+          <p><strong>Avoid:</strong> Jun–Oct (monsoon/heavy rains)</p>
+        </div>
+        <div class="info-card">
+          <h4>🍛 Thai Cuisine</h4>
+          <ul class="airline-list">
+            <li>Pad Thai</li>
+            <li>Tom Yum Soup</li>
+            <li>Green/Red Curry</li>
+            <li>Mango Sticky Rice</li>
+            <li>Som Tum (papaya salad)</li>
+          </ul>
+        </div>
+        <div class="info-card">
+          <h4>🙏 Customs</h4>
+          <ul class="airline-list">
+            <li>Wai (hands together bow) as greeting</li>
+            <li>Never touch someone's head (sacred)</li>
+            <li>Dress modestly at temples</li>
+            <li>The King is highly revered — be respectful</li>
+            <li>Bargaining is accepted in markets</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- THIRD CONDITIONAL -->
+<section class="conditional-section" id="conditional3">
+  <div class="container">
+    <div class="section-label">Lesson 3 — Third Conditional</div>
+    <h2 class="section-title">Looking Back: What If…?</h2>
+    <div class="divider"></div>
+    <p class="cond-intro">The Third Conditional — <strong>If + had + past participle, would have + past participle</strong> — allows us to reflect on past hypothetical situations. Here are 10 reflections about a missed trip to China.</p>
+
+    <div class="cond-grid">
+      <div class="cond-card"><span class="num">01</span>If I had visited China last year, I would have climbed the Great Wall and fulfilled a lifelong dream.</div>
+      <div class="cond-card"><span class="num">02</span>If I had studied Chinese before traveling, I would have communicated more effectively with local residents and understood the culture more deeply.</div>
+      <div class="cond-card"><span class="num">03</span>If I had booked the 2-Day Beijing Highlights Tour, I would have seen the Forbidden City, the Temple of Heaven, and the Summer Palace in just 48 hours.</div>
+      <div class="cond-card"><span class="num">04</span>If I had arrived in Beijing during spring, I would have experienced the city in full bloom and enjoyed mild, perfect weather for sightseeing.</div>
+      <div class="cond-card"><span class="num">05</span>If I had attended the Kung Fu Show at Beijing Red Theatre, I would have been mesmerized by the incredible martial arts performance of "The Legend of Kung Fu."</div>
+      <div class="cond-card"><span class="num">06</span>If I had visited the Terracotta Army in Xi'an, I would have stood face-to-face with warriors that had remained buried for over 2,000 years.</div>
+      <div class="cond-card"><span class="num">07</span>If I had walked along The Bund in Shanghai at night, I would have photographed one of the most spectacular skylines in the world.</div>
+      <div class="cond-card"><span class="num">08</span>If I had taken the high-speed train from Beijing to Shanghai, I would have saved hours of travel time and seen the Chinese countryside at 350 km/h.</div>
+      <div class="cond-card"><span class="num">09</span>If I had downloaded WeChat and Alipay before entering China, I would have navigated cashless payments and digital communication without any problems.</div>
+      <div class="cond-card"><span class="num">10</span>If I had climbed Victoria Peak in Hong Kong at night, I would have witnessed the Symphony of Lights — a breathtaking laser show across the entire harbor skyline.</div>
+    </div>
+  </div>
+</section>
+
+<!-- CHAT / Q&A -->
+<section class="chat-section" id="chat">
+  <div class="container">
+    <div class="section-label">Lesson 2 &amp; 3 — Q&amp;A</div>
+    <h2 class="section-title">Questions About China</h2>
+    <div class="divider"></div>
+    <p class="chat-intro">Answering the questions from the text "Five Places to Visit in China" and the Beijing Tours resource, in the style of a web chat.</p>
+
+    <div class="chat-window">
+      <div class="chat-header">
+        <span class="chat-avatar">🐉</span>
+        <span>Dragon &amp; Dragon Tours — Live Chat Support</span>
+      </div>
+
+      <div class="msg question">
+        <div class="msg-label">🌍 Visitor</div>
+        <div class="bubble">From the 5 places mentioned, which ones would you like to visit the most? Why?</div>
+      </div>
+      <div class="msg answer">
+        <div class="msg-label">David H.</div>
+        <div class="bubble-wrap">
+          <div class="bubble">The Great Wall of China would be my top choice — it is a symbol of human endurance and one of the New Seven Wonders of the World. I would also love to visit the Forbidden City in Beijing, as its 9,000 rooms and five centuries of imperial history are simply unmatched. If I had to pick only one, the Great Wall would win every time!</div>
+        </div>
+      </div>
+
+      <div class="msg question">
+        <div class="msg-label">🌍 Visitor</div>
+        <div class="bubble">What would you like to do as a tourist if you had the possibility to visit China?</div>
+      </div>
+      <div class="msg answer">
+        <div class="msg-label">David H.</div>
+        <div class="bubble-wrap">
+          <div class="bubble">If I had the possibility to visit China, I would start in Beijing with the Great Wall and Forbidden City, then travel by high-speed train to Xi'an to see the Terracotta Army, continue to Shanghai to walk along The Bund at night, and finish in Hong Kong watching the harbor lights from Victoria Peak. I would also immerse myself in local cuisine — Peking duck, dumplings, hot pot — and visit local markets every day!</div>
+        </div>
+      </div>
+
+      <div class="msg question">
+        <div class="msg-label">🌍 Visitor</div>
+        <div class="bubble">From the 2 tour plans in the Beijing Tours text, which one would you choose? Why?</div>
+      </div>
+      <div class="msg answer">
+        <div class="msg-label">David H.</div>
+        <div class="bubble-wrap">
+          <div class="bubble">I would choose the 2-Day Beijing Highlights Bus Group Tour without doubt. If I had taken that tour, I would have seen the most iconic landmarks — the Great Wall, Ming Tombs, Forbidden City, Temple of Heaven, and Summer Palace — all in two days with a professional English-speaking guide. The Kung Fu Show is amazing, but the daytime tour offers so much more historical depth and variety. If I had visited Beijing for the first time, the 2-day tour would have given me the most complete picture of the city's soul.</div>
+        </div>
+      </div>
+
+      <div class="msg question">
+        <div class="msg-label">🌍 Visitor</div>
+        <div class="bubble">If you had the opportunity of taking a tour to Beijing, what would you do?</div>
+      </div>
+      <div class="msg answer">
+        <div class="msg-label">David H.</div>
+        <div class="bubble-wrap">
+          <div class="bubble">If I had the opportunity of taking a tour to Beijing, I would wake up before sunrise to see the flag-raising ceremony at Tiananmen Square, then walk through the Forbidden City imagining the lives of 24 emperors. I would hike the Great Wall at Badaling, have a traditional lunch of Peking Duck, visit the Temple of Heaven in the afternoon, and end the evening watching the Kung Fu Show. It would be the most culturally rich day of my life!</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">🐉 Dragon &amp; Dragon World Tours 🐉</div>
+  <p>Created by David Andrés Henao López · English Module · San Mateo Educación Superior · 2025</p>
+  <p style="margin-top:0.5rem;">Project integrating Units 1, 2, and 3 — First, Second &amp; Third Conditionals applied to World Tourism</p>
+</footer>
+
+<script>
+  function switchTab(country) {
+    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(country).classList.add('active');
+    event.target.classList.add('active');
+  }
+</script>
+</body>
+</html>
